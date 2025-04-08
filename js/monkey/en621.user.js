@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 // ==UserScript==
 // @name         en621
-// @namespace    Lilith
+// @namespace    VariableVixen
 // @version      6.0.2
 // @description  en(hanced)621 - minor-but-useful enhancements to e621
-// @author       PrincessRTFM
+// @author       Aryanna Morgan
 // @match        *://e621.net/*
-// @updateURL    https://gh.princessrtfm.com/js/monkey/en621.user.js
-// @downloadURL  https://gh.princessrtfm.com/js/monkey/en621.user.js
+// @updateURL    https://static.variablevixen.dev/js/monkey/en621.user.js
+// @downloadURL  https://static.variablevixen.dev/js/monkey/en621.user.js
 // @grant        GM_info
 // @grant        GM_getValue
 // @grant        GM_setValue
