@@ -3,7 +3,7 @@ name: JS library bug report
 about: Report a problem with one of the javascript libraries hosted on the website
 title: 'Bug: XXXXXXXX'
 labels: bug, javascript
-assignees: PrincessRTFM
+assignees: VariableVixen
 
 ---
 

@@ -3,7 +3,7 @@ name: Userscript bug report
 about: Report a bug with one of the userscripts hosted on the website
 title: 'Bug: XXXXXXXX'
 labels: bug, userscript
-assignees: PrincessRTFM
+assignees: VariableVixen
 
 ---
 

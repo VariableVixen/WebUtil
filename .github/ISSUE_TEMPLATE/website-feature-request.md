@@ -4,7 +4,7 @@ about: Suggest an idea for one of the pages on the website, or a brand new page 
   like
 title: 'Request: XXXXXXXX'
 labels: enhancement, website
-assignees: PrincessRTFM
+assignees: VariableVixen
 
 ---
 

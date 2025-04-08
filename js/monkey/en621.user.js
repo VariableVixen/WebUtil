@@ -185,7 +185,7 @@ CONSOLE_TOOLS.SCRIPT_VERSION = Object.freeze(GM_info.script.version.split(".").m
 const pause = (delay) => new Promise((resolve) => setTimeout(resolve.bind(resolve, delay), delay));
 const request = (uri, ctx) => {
 	const url = new URL(String(uri));
-	url.searchParams.append('_client', encodeURIComponent(`${SCRIPT_TITLE} by lsong@princessrtfm.com`));
+	url.searchParams.append('_client', encodeURIComponent(`${SCRIPT_TITLE} by amorgan@variablevixen.dev`));
 	return new Promise((resolve, reject) => GM_xmlhttpRequest({
 		method: "GET",
 		url: url.toString(),

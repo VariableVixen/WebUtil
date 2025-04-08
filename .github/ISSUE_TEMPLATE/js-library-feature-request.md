@@ -4,7 +4,7 @@ about: Suggest an idea for a javascript library hosted on the website, or a new 
   you'd like
 title: 'Request: XXXXXXXX'
 labels: enhancement, javascript
-assignees: PrincessRTFM
+assignees: VariableVixen
 
 ---
 

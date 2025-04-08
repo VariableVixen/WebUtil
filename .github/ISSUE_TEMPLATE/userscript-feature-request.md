@@ -4,7 +4,7 @@ about: Suggest an idea for a userscript hosted on the website, or a new script y
   like
 title: 'Request: XXXXXXXX'
 labels: enhancement, userscript
-assignees: PrincessRTFM
+assignees: VariableVixen
 
 ---
 

@@ -3,7 +3,7 @@ name: Website bug report
 about: Report a bug with one or more of the pages on the website
 title: 'Bug: XXXXXXXX'
 labels: bug, website
-assignees: PrincessRTFM
+assignees: VariableVixen
 
 ---
 
