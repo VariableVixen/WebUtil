@@ -318,7 +318,7 @@ $(() => {
 	draw.fillStyle = '#ffffff';
 	faceListContainer
 		.children('.face-header')
-		.not(':first()')
+		.first()
 		.click();
 	faceListContainer
 		.find('img')
