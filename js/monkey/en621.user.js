@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         en621
 // @namespace    VariableVixen
-// @version      6.0.2
+// @version      6.0.3
 // @description  en(hanced)621 - minor-but-useful enhancements to e621
 // @author       Aryanna Morgan
 // @match        *://e621.net/*
@@ -19,6 +19,7 @@
 // ==/UserScript==
 
 /* CHANGELOG
+v6.0.3 - fix direct image link being positioned wrong on post pages
 v6.0.2 - fix pool reader toggle being misaligned
 v6.0.1 - fixed autocleaning of search input
 v6.0.0 - creating and deleting message tabs now allows the events to be canceled
@@ -1161,7 +1162,7 @@ else if (PATH.startsWith(POST_PATH_PREFIX)) {
 		if (sourceLink && sourceLink.href) {
 			const directSourceItem = makeElem('li', 'en621-direct-source');
 			const directSourceLink = makeElem('a');
-			GM_addStyle('#en621-direct-source { position: absolute; right: 20px; cursor: pointer; }');
+			GM_addStyle('#en621-direct-source { margin-left: auto; cursor: pointer; }');
 			directSourceLink.textContent = 'Direct Link';
 			directSourceLink.href = sourceLink.href;
 			directSourceItem.append(directSourceLink);
