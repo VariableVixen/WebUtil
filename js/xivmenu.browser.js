@@ -28,6 +28,8 @@ const JOBS = {
 	BLU: "Blue Mage",
 	RPR: "Reaper",
 	SGE: "Sage",
+	VPR: "Viper",
+	PCT: "Pictomancer",
 };
 
 Object.defineProperty(window, 'DEBUG_MODE', {
