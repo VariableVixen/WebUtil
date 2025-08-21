@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         en621
 // @namespace    VariableVixen
-// @version      6.0.3
+// @version      6.0.4
 // @description  en(hanced)621 - minor-but-useful enhancements to e621
 // @author       Aryanna Morgan
 // @match        *://e621.net/*
@@ -19,6 +19,7 @@
 // ==/UserScript==
 
 /* CHANGELOG
+v6.0.4 - use image tag's src attribute if the download link can't be found (site changed HTML again)
 v6.0.3 - fix direct image link being positioned wrong on post pages
 v6.0.2 - fix pool reader toggle being misaligned
 v6.0.1 - fixed autocleaning of search input
@@ -1109,10 +1110,11 @@ if (PATH.startsWith(POOL_PATH_PREFIX) && PATH.slice(POOL_PATH_PREFIX.length).mat
 	// [ominous music]
 }
 else if (PATH.startsWith(POST_PATH_PREFIX)) {
-	const errorNoSource = "Could't find download/source link!";
+	const errorNoSource = "Couldn't find download/source link!";
 	const postRatingClassPrefix = 'post-rating-text-';
-	const sourceLink = document.querySelector("#image-download-link > a[href]");
+	const sourceLink = document.querySelector("#image-container[data-file-url]");
 	const image = document.querySelector("#image");
+	const sourceUri = sourceLink ? sourceLink.dataset.fileUrl : image.src;
 	const parentChildNotices = document.querySelector(".bottom-notices > .parent-children");
 	const postRatingElem = document.querySelector("#post-rating-text");
 	const tagList = document.querySelector("#tag-list");
@@ -1144,8 +1146,8 @@ else if (PATH.startsWith(POST_PATH_PREFIX)) {
 		if (image.tagName.toLowerCase() == 'img') {
 			// Doubleclicking the image goes right to the direct link
 			image.addEventListener('dblclick', (evt) => {
-				if (sourceLink && sourceLink.href) {
-					location.assign(sourceLink.href);
+				if (sourceUri) {
+					location.assign(sourceUri);
 				}
 				else {
 					putError(errorNoSource);
@@ -1159,12 +1161,12 @@ else if (PATH.startsWith(POST_PATH_PREFIX)) {
 			setFlag("no-quick-source");
 		}
 		// And whatever it is, we add a link on the subnavbar to go to the direct link too
-		if (sourceLink && sourceLink.href) {
+		if (sourceUri) {
 			const directSourceItem = makeElem('li', 'en621-direct-source');
 			const directSourceLink = makeElem('a');
 			GM_addStyle('#en621-direct-source { margin-left: auto; cursor: pointer; }');
 			directSourceLink.textContent = 'Direct Link';
-			directSourceLink.href = sourceLink.href;
+			directSourceLink.href = sourceUri;
 			directSourceItem.append(directSourceLink);
 			subnavbar.append(directSourceItem);
 			setFlag("has-source-link");
