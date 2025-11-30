@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         en621
 // @namespace    VariableVixen
-// @version      6.0.4
+// @version      6.0.5
 // @description  en(hanced)621 - minor-but-useful enhancements to e621
 // @author       Aryanna Morgan
 // @match        *://e621.net/*
@@ -19,6 +19,7 @@
 // ==/UserScript==
 
 /* CHANGELOG
+v6.0.5 - fix tag elevation on search pages (e621 changed their fucking html again)
 v6.0.4 - use image tag's src attribute if the download link can't be found (site changed HTML again)
 v6.0.3 - fix direct image link being positioned wrong on post pages
 v6.0.2 - fix pool reader toggle being misaligned
@@ -939,16 +940,16 @@ const elevateSearchTerms = () => {
 			].join("\n"));
 			// Reverse cause we're looking bottom-up so that when we `.prepend()` the element to move it up,
 			// the original ordering is maintained.
-			const tagElements = Array.from(tagList.querySelectorAll("a.search-tag")).reverse();
+			const tagElements = Array.from(tagList.querySelectorAll(".tag-list-name")).reverse();
 			log(`Elevating all instances of searched tags (${terms.length}) in ${tagElements.length} listed`);
 			for (const tagElem of tagElements) {
 				try {
-					const tag = tagElem.textContent.toLowerCase();
+					const tag = tagElem.textContent.trim().toLowerCase();
 					const idx = terms.indexOf(tag);
 					if (idx >= 0) {
 						terms.splice(idx, 1);
 						log(`Elevating "${tag}"`);
-						const line = tagElem.parentElement;
+						const line = tagElem.parentElement.parentElement;
 						const group = line.parentElement;
 						tagElem.classList.add("en621-highlighted-tag");
 						group.insertAdjacentElement('afterbegin', line);
@@ -998,9 +999,10 @@ const elevateSearchTerms = () => {
 const disableImageTooltips = () => {
 	const tipped = document.querySelectorAll('div#posts > section.posts-container > article > a[href] > picture > img[title]');
 	for (const img of tipped) {
-		if (img.title) {
-			img.dataset.title = img.title;
-			img.title = '';
+		const target = img.parentElement.parentElement;
+		if (target.title) {
+			target.dataset.title = target.title;
+			target.title = '';
 		}
 	}
 	setFlag(DISABLED_TOOLTIPS_FLAG);
@@ -1011,9 +1013,10 @@ const disableImageTooltips = () => {
 const enableImageTooltips = () => {
 	const untipped = document.querySelectorAll('div#posts > section.posts-container > article > a[href] > picture > img[data-title]');
 	for (const img of untipped) {
-		if (img.dataset.title) {
-			img.title = img.dataset.title;
-			img.dataset.title = '';
+		const target = img.parentElement.parentElement;
+		if (target.dataset.title) {
+			target.title = target.dataset.title;
+			target.dataset.title = '';
 		}
 	}
 	unsetFlag(DISABLED_TOOLTIPS_FLAG);
@@ -1651,7 +1654,7 @@ setTimeout(() => {
 			tooltipToggle.checked = false;
 			clearInterval(timer);
 		}
-		else if (++counter >= 10) {
+		else if (++counter >= 50) {
 			clearInterval(timer);
 		}
 	}, 100);
