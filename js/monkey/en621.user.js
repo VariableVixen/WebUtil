@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         en621
 // @namespace    VariableVixen
-// @version      6.0.6
+// @version      6.0.7
 // @description  en(hanced)621 - minor-but-useful enhancements to e621
 // @author       Aryanna Morgan
 // @match        *://e621.net/*
@@ -19,6 +19,7 @@
 // ==/UserScript==
 
 /* CHANGELOG
+v6.0.7 - fix last-seen-post highlighting
 v6.0.6 - fix tooltip toggling and hoverzoom detection
 v6.0.5 - fix tag elevation on search pages (e621 changed their fucking html again)
 v6.0.4 - use image tag's src attribute if the download link can't be found (site changed HTML again)
@@ -1329,14 +1330,14 @@ else if (PATH == POST_INDEX_PATH) {
 	setTimeout(deferredPostScan, 1000);
 	// Apply the styling to highlight the last post the user saw on this search
 	GM_addStyle([
-		`${postSelector}.en621-last-seen > a img {`,
+		`${postSelector}.en621-last-seen > a {`,
 		"border: 3px dashed yellow !important;",
 		"}",
 	].join("\n"));
 	// If this is a new search, we won't have a last-seen ID
 	if (lastSeenPostId) {
 		// But if we do, look for that post on this page...
-		const lastSeenPost = document.querySelector(`${postSelector}#post_${lastSeenPostId}`);
+		const lastSeenPost = document.querySelector(`${postSelector}[data-id="${lastSeenPostId}"]`);
 		// ...and if it's here (it might not be, if it's been long enough on a popular tag) then flag it and make the scroll tab
 		if (lastSeenPost) {
 			const scrollLink = document.createElement('a');
