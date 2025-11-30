@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         en621
 // @namespace    VariableVixen
-// @version      6.0.5
+// @version      6.0.6
 // @description  en(hanced)621 - minor-but-useful enhancements to e621
 // @author       Aryanna Morgan
 // @match        *://e621.net/*
@@ -19,6 +19,7 @@
 // ==/UserScript==
 
 /* CHANGELOG
+v6.0.6 - fix tooltip toggling and hoverzoom detection
 v6.0.5 - fix tag elevation on search pages (e621 changed their fucking html again)
 v6.0.4 - use image tag's src attribute if the download link can't be found (site changed HTML again)
 v6.0.3 - fix direct image link being positioned wrong on post pages
@@ -997,7 +998,7 @@ const elevateSearchTerms = () => {
 // decided to add a feature to turn them off. Of course, it needs to be able to turn them back ON
 // again too in case the user wants them back.
 const disableImageTooltips = () => {
-	const tipped = document.querySelectorAll('div#posts > section.posts-container > article > a[href] > picture > img[title]');
+	const tipped = document.querySelectorAll('div#posts > section.posts-container > article > a[href][title] > picture > img');
 	for (const img of tipped) {
 		const target = img.parentElement.parentElement;
 		if (target.title) {
@@ -1011,7 +1012,7 @@ const disableImageTooltips = () => {
 	});
 };
 const enableImageTooltips = () => {
-	const untipped = document.querySelectorAll('div#posts > section.posts-container > article > a[href] > picture > img[data-title]');
+	const untipped = document.querySelectorAll('div#posts > section.posts-container > article > a[href][data-title] > picture > img');
 	for (const img of untipped) {
 		const target = img.parentElement.parentElement;
 		if (target.dataset.title) {
@@ -1648,7 +1649,7 @@ setTimeout(() => {
 	// Timing is a pain
 	let counter = 0;
 	const timer = setInterval(() => {
-		if (document.querySelector("img.hoverZoomLink")) {
+		if (document.querySelector("img.hoverZoomLink, a.hoverZoomLink")) {
 			// Hover zoom is installed
 			disableImageTooltips();
 			tooltipToggle.checked = false;
